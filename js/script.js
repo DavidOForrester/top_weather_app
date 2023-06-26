@@ -8,6 +8,7 @@ getWeatherButton.addEventListener("click", () => {
 
 async function getWeather(location) {
   try {
+    updateDom(".");
     const response = await fetch(
       "https://api.weatherapi.com/v1/current.json?key=021675ea36b44361b9c73259232506&q=" +
         location
@@ -16,14 +17,15 @@ async function getWeather(location) {
     const current = await weather.current;
     const tempC = await current.temp_c;
     updateDom(tempC);
-  } catch(error) {
-    console.log(error)
+  } catch (error) {
+    message = "Please enter a valid location";
+    updateDom(message);
   }
 }
 
-function updateDom(temp) {
-  const tempDiv = document.createElement("div");
-  tempDiv.textContent = temp;
+function updateDom(message) {
+  const messageDiv = document.getElementById("message");
+  messageDiv.textContent = message;
 
-  document.body.appendChild(tempDiv);
+  document.body.appendChild(messageDiv);
 }
